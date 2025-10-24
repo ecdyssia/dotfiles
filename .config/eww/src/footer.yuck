@@ -1,0 +1,55 @@
+(defwidget btn [name command class]
+    (button :onclick command 
+        :class "btn ${class}" 
+      name))
+
+(defwidget btns []
+  (box :orientation "h"
+       :class 'footerBtns'
+ 
+  (btn :name ""
+  :command "rofi -show drun &"
+    :class "restart"
+  )
+
+(btn :name ""
+    :command "killall bar.sh dwm & eww close eww"
+  :class "lock"
+ )
+
+ (btn :name wifi 
+   :command "iwgtk & eww close eww"
+   :class "wifi"
+  )
+
+ (btn :name "" 
+  :command "slock & doas systemctl suspend & eww close eww"
+    :class "lock"
+  )
+
+(btn :name ""  
+     :command "/home/elixir/.config/dwm-btw/scripts/start_picom.sh &"
+     :class "picom-start-btn"
+)
+
+(btn :name ""  
+     :command "/home/elixir/.config/dwm-btw/scripts/stop_picom.sh &"
+     :class "picom-stop-btn"
+)
+))
+
+(defwidget footer []
+  (box :orientation "v" :space-evenly false 
+  (box :orientation "h"  :class "brightnessbox" :space-evenly false :spacing 20
+  (label :text '')
+  (scale
+        :class 'brightness'
+        :min 0
+        :max 100
+        :value head_vol
+        :value brightness
+        :onchange "light -S {}%"
+        :hexpand true
+      ))
+  (btns)
+ ))
